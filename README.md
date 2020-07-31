@@ -1,13 +1,14 @@
 # Quasar Spectroscopy Sound
 
 This repository contains the software Quasar Spectroscopy Sound version 1.0.0 for performing Quasar absoprtion line sonificaiton. 
+
 <img width="400" alt="QSS_UI" src="https://user-images.githubusercontent.com/905479/88997304-3b533600-d2a4-11ea-81a3-5cac3c6cda10.png">
 
 
 The software and implemented sonifciation approaches are described in the paper QUASAR SPECTROSCOPY SOUND: ANALYZING INTERGALACTIC AND CIRCUMGALACTIC MEDIA WITH SOUND (included in this repository as QuasarSpectroscopySound.png). Specifically, reference sections 2 and 3 of the paper to learn more details about the sonification and software functionatliy.
 
 
-Source code and a compiled binary (Quasar Sepctroscopy Sound) has been included in the repository for demonstration. The software is designed to run on MacOS 10.11 and above.
+Source code and a compiled binary (Quasar Sepctroscopy Sound) have also been included in the repository for demonstration. The software is designed to run on MacOS 10.11 and above.
 
 
 To test the software, follow the steps below:
