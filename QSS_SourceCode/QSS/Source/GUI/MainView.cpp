@@ -245,19 +245,14 @@ void MainView::buttonClicked (Button* b)
         
         if(enableBatchPlaybackButton->getToggleState())
         {
-            dataHandler->overviewPlayback->setFamilyPlaybackSpeed(eFamilyID_1, 2000);
-            dataHandler->overviewPlayback->startFamilyPlayback(eFamilyID_1);
-            
+            dataHandler->overviewPlayback->setFamilyPlaybackSpeed(eFamilyID_1, 300);
             dataHandler->overviewPlayback->setFamilyPlaybackSpeed(eFamilyID_4, 300);
-            dataHandler->overviewPlayback->startFamilyPlayback(eFamilyID_4);
-            
             dataHandler->overviewPlayback->setFamilyPlaybackSpeed(eFamilyID_5, 750);
-            dataHandler->overviewPlayback->startFamilyPlayback(eFamilyID_5);
+            
+            dataHandler->overviewPlayback->startStopPlaybackAll(true);
         }
         else
         {
-            //dataHandler->overviewPlayback->stopFamilyPlayback(eFamilyID_1);
-            
             dataHandler->overviewPlayback->startStopPlaybackAll(false); // stop playback on all families...
         }
         

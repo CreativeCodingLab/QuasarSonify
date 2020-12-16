@@ -5,13 +5,45 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "../GlobalDefines.h"
 #include "OSCHandler.h"
+#include "DataContainers.h"
 
 
-class OverviewPlayback : public MultiTimer
+struct PlaybackParameters
+{
+    EFamilyID familyID{eFamilyID_none};
+    
+    int playbackSpeedMS{100};
+    int randomSpeedOffset{0};
+    
+    int playbackCounter{0};
+    
+    bool playbackAudio{false};
+    
+    int metricIndx{0};
+    
+    struct NoteParameters
+    {
+        int pitch{0};
+        float amp{0};
+        float attack{0};
+        float decay{0};
+        float sustain{1.};
+        float release{0};
+        float pan{0};
+    };
+    std::vector<NoteParameters> noteList;
+            
+    
+    String familyAddress{""};
+    StringArray metricStrings;
+};
+
+
+
+class OverviewPlayback : public HighResolutionTimer
 {
     
 public:
-    
     
     OverviewPlayback(OSCHandler *osc_) : osc(osc_)
     {
@@ -22,29 +54,43 @@ public:
         }
     }
     
-    ~OverviewPlayback()
-    {
-        
-    }
+    ~OverviewPlayback(){}
     
     
-    void timerCallback (int timerID)
+    void hiResTimerCallback ()
     {
-        
-        // use the EFamilyID as the timerID, so we can filter on that to check what should be broadcast...
+        //
         for(int i = 0; i < familyPlayback.size(); i++)
         {
-            if(familyPlayback[i].familyID == (EFamilyID)timerID)
+            if(familyPlayback[i].playbackAudio)
             {
-                
-                String address = familyPlayback[i].familyAddress;
-                int indx = familyPlayback[i].metricIndx;
-                String metrics = familyPlayback[i].metricStrings[indx];
-                
-                // broadcast the above address and metrics....
-                osc->sendOSCMessageString(address, metrics);
-                
-                familyPlayback[i].metricIndx = (indx + 1) % familyPlayback[i].metricStrings.size();
+                if(familyPlayback[i].playbackCounter == 0)
+                {
+                    int indx = familyPlayback[i].metricIndx;
+                    
+                    // make some random adjustments to the note list for the family.
+                    noteListAdjustments(indx, familyPlayback[i]);
+                    
+                    
+                    // get the address and note metric string and broadcast over osc...
+                    String address = familyPlayback[i].familyAddress;
+                    String metrics = familyPlayback[i].metricStrings[indx];
+                    osc->sendOSCMessageString(address, metrics);
+                    
+                    
+                    // inrement the note list index for this family...
+                    familyPlayback[i].metricIndx = (indx + 1) % familyPlayback[i].metricStrings.size();
+                    
+                    
+                    // add rsome andomness to the playback onset time for each tone...
+                    Random r;
+                    familyPlayback[i].randomSpeedOffset = 1.0 * r.nextFloat() * familyPlayback[i].playbackSpeedMS - 0.5 * familyPlayback[i].playbackSpeedMS;
+                }
+
+                // keep track of playback time... note can randomize a bit...
+                int playbackTime_ms = familyPlayback[i].playbackSpeedMS + familyPlayback[i].randomSpeedOffset;
+                familyPlayback[i].playbackCounter = (familyPlayback[i].playbackCounter + 1) % playbackTime_ms;
+                //std::cout << "----- counter: " << familyPlayback[i].playbackCounter << std::endl;
             }
         }
     }
@@ -61,13 +107,14 @@ public:
         }
     }
     
+    
     void startFamilyPlayback(EFamilyID famID)
     {
         for(int i = 0; i < familyPlayback.size(); i++)
         {
             if(familyPlayback[i].familyID == famID)
             {
-                startTimer(famID, familyPlayback[i].playbackSpeedMS);
+                familyPlayback[i].playbackAudio = true;
             }
         }
     }
@@ -75,41 +122,53 @@ public:
     
     void stopFamilyPlayback(EFamilyID  famID)
     {
-        stopTimer(famID);
+        for(int i = 0; i < familyPlayback.size(); i++)
+        {
+            if(familyPlayback[i].familyID == famID)
+            {
+                familyPlayback[i].playbackAudio = false;
+            }
+        }
     }
     
     
     void startStopPlaybackAll(bool start)
     {
+        for(int i = 0; i < familyPlayback.size(); i++)
+        {
+            familyPlayback[i].playbackAudio = start;
+        }
+
         if(start)
         {
-            for(int i = 0; i < familyPlayback.size(); i++)
-            {
-                startTimer(familyPlayback[i].familyID, familyPlayback[i].playbackSpeedMS);
-            }
+            startTimer(1);
         }
         else
         {
-            for(int i = 0; i < familyPlayback.size(); i++)
-            {
-                stopTimer(familyPlayback[i].familyID);
-            }
+            stopTimer();
         }
     }
     
     
-    struct PlaybackParameters
-    {
-        EFamilyID familyID{eFamilyID_none};
-        int playbackSpeedMS{100};
-        
-        int metricIndx{0};
-        
-        String familyAddress{""};
-        StringArray metricStrings;
-    };
-    std::vector<PlaybackParameters> familyPlayback;
     
+    // main call to set the overview playback...
+    void setMainOverviewPlayback(std::vector<std::vector<SpectralData> > &selectedBatchSpectralData);
+    
+    // this family consists of hydrogen (H1) ion
+    void setOverviewPlayback_Family1(std::vector<SpectralData> &specData);
+    
+    // this family consists of other ions: ...to be determined...
+    void setOverviewPlayback_Family2(std::vector<SpectralData> &specData);
+
+    
+    // used to make random adjustments to a given family's note list during playback.
+    void noteListAdjustments(int noteIndx, PlaybackParameters &famPlayback);
+
+    
+    
+    
+
+    std::vector<PlaybackParameters> familyPlayback;
     
     OSCHandler *osc{nullptr};
 

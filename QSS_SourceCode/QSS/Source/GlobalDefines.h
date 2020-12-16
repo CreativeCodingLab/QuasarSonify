@@ -10,6 +10,9 @@
 
 #define BATCH_SONIFY_TEST 0
 
+#define DEFAULT_REDSHIFT 0.20257
+#define SPEEDOFLIGHT_C 299792.498
+
 
 enum EFamilyID
 {

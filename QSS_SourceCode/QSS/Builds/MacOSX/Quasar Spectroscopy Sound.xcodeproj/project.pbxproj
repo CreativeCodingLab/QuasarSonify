@@ -13,6 +13,7 @@
 		1343A569254FC9DE006C8ACF /* pg1260_norm.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1343A567254FC9DE006C8ACF /* pg1260_norm.txt */; };
 		1343A56A254FC9DE006C8ACF /* pg1260_norm.ascii in Resources */ = {isa = PBXBuildFile; fileRef = 1343A568254FC9DE006C8ACF /* pg1260_norm.ascii */; };
 		1343A570255A0F35006C8ACF /* OverviewPlayback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1343A56E255A0F35006C8ACF /* OverviewPlayback.cpp */; };
+		135F4F0A2589590600A326CE /* DataContainers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 135F4F092589590600A326CE /* DataContainers.cpp */; };
 		19A8647C13E1BF3D0BC90015 /* AudioGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27CF12EC56F32A7B480A54E3 /* AudioGraph.cpp */; };
 		1BC31752C6584ADA1C126457 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA4D740AECFA2BC7618EC83 /* CoreAudio.framework */; };
 		1DC384A0D29ADDBE1EBA23AD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A62040922FDFB8C05EB02DF0 /* Accelerate.framework */; };
@@ -63,6 +64,8 @@
 		1343A568254FC9DE006C8ACF /* pg1260_norm.ascii */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = pg1260_norm.ascii; path = ../../ResourceFiles/pg1260_norm.ascii; sourceTree = "<group>"; };
 		1343A56E255A0F35006C8ACF /* OverviewPlayback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OverviewPlayback.cpp; path = ../../Source/Data/OverviewPlayback.cpp; sourceTree = "<group>"; };
 		1343A56F255A0F35006C8ACF /* OverviewPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverviewPlayback.h; path = ../../Source/Data/OverviewPlayback.h; sourceTree = "<group>"; };
+		135F4F082589590600A326CE /* DataContainers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataContainers.h; path = ../../Source/Data/DataContainers.h; sourceTree = "<group>"; };
+		135F4F092589590600A326CE /* DataContainers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataContainers.cpp; path = ../../Source/Data/DataContainers.cpp; sourceTree = "<group>"; };
 		1ABD79D5772B2E027F4EE69E /* Biquads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Biquads.h; path = ../../Libraries/Audio/Biquads.h; sourceTree = SOURCE_ROOT; };
 		1CA4D740AECFA2BC7618EC83 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		1CD9B8C6D79D85C8A4929AFE /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = SOURCE_ROOT; };
@@ -273,6 +276,8 @@
 			children = (
 				1343A56E255A0F35006C8ACF /* OverviewPlayback.cpp */,
 				1343A56F255A0F35006C8ACF /* OverviewPlayback.h */,
+				135F4F092589590600A326CE /* DataContainers.cpp */,
+				135F4F082589590600A326CE /* DataContainers.h */,
 				FDB83E4ED6A2F0D00804DC55 /* DataHandler.cpp */,
 				E57BC830CC499A1955F1E940 /* DataHandler.h */,
 				E21095427DD135D7AC1D4B74 /* OSCHandler.cpp */,
@@ -441,6 +446,7 @@
 				5DA3CC105863A7D7733A3A2E /* include_juce_graphics.mm in Sources */,
 				F0E2E5E8F5621D08ADB3C9FF /* include_juce_gui_basics.mm in Sources */,
 				F4D63F908CC709369E2628E8 /* include_juce_gui_extra.mm in Sources */,
+				135F4F0A2589590600A326CE /* DataContainers.cpp in Sources */,
 				861DB1FA512FE71C4CCB97EF /* include_juce_opengl.mm in Sources */,
 				4630F631D9B0D3DEE66E2200 /* include_juce_osc.cpp in Sources */,
 			);
